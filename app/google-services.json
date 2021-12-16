@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "947143196876",
+    "project_id": "falling-asteroids",
+    "storage_bucket": "falling-asteroids.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:947143196876:android:6a64a83acce08535d54269",
+        "android_client_info": {
+          "package_name": "com.example.game2d"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "947143196876-8dd4u3ecntokfppa5qg2rb8t3f9k1q1b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChPDT30k7x6edRv6zcjUCs9kduMh3IAqU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "947143196876-8dd4u3ecntokfppa5qg2rb8t3f9k1q1b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

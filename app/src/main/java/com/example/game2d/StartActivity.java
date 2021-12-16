@@ -4,43 +4,59 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaCodec;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
-public class MainActivity extends AppCompatActivity {
+public class StartActivity extends AppCompatActivity {
 
-     private TextView logoutButton;
+    private TextView loginButton;
+    private TextView registerButton;
+
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setFullscreen();
-        setContentView(R.layout.activity_main);
 
-        findViewById(R.id.startButton).setOnClickListener(new View.OnClickListener() {
+        setContentView(R.layout.activity_start);
+
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        if(currentUser != null) {
+            startActivity(new Intent(StartActivity.this, MainActivity.class));
+        }
+        else {
+            SharedPreferences sharedPreferences = getSharedPreferences("game", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putInt("highScore", 0);
+            editor.apply();
+        }
+
+        registerButton = findViewById(R.id.registerButton);
+        loginButton = findViewById(R.id.loginButton);
+
+        registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, GameActivity.class));
+                startActivity(new Intent(StartActivity.this, RegisterActivity.class));
             }
         });
 
-        logoutButton = findViewById(R.id.logoutButton);
-        logoutButton.setOnClickListener(new View.OnClickListener() {
+        loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                Toast.makeText(MainActivity.this, "Logout successfully", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(MainActivity.this, StartActivity.class));
+                startActivity(new Intent(StartActivity.this, LoginActivity.class));
             }
         });
-
-        TextView highestScore = findViewById(R.id.highScore);
-        SharedPreferences sharedPreferences = getSharedPreferences("game", MODE_PRIVATE);
-        highestScore.setText("Highest Score:" + sharedPreferences.getInt("highScore", 0) + " ");
     }
 
     private void setFullscreen() {

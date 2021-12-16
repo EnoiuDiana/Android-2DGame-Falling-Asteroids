@@ -1,14 +1,14 @@
 package com.example.game2d;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.graphics.Typeface;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 
@@ -38,6 +38,7 @@ public class GameView extends SurfaceView implements Runnable {
     private Bitmap game_over;
     private int asteroidNumber = 4;
     private int score = 0;
+    private SharedPreferences sharedPreferences;
     private GameActivity gameActivity;
     private int laserBeamSpeed = 20;
 
@@ -46,6 +47,8 @@ public class GameView extends SurfaceView implements Runnable {
         super(gameActivity);
 
         this.gameActivity = gameActivity;
+
+        sharedPreferences = gameActivity.getSharedPreferences("game", Context.MODE_PRIVATE);
 
         this.screenX = screenX;
         this.screenY = screenY;
@@ -138,7 +141,7 @@ public class GameView extends SurfaceView implements Runnable {
 
         updateCount ++;
         if(updateCount == 7)  {
-            newLaserBeams();  // maybe make a thread for this?
+            newLaserBeams();
             updateCount = 0;
         }
 
@@ -164,16 +167,17 @@ public class GameView extends SurfaceView implements Runnable {
             canvas.drawBitmap(background1.background, background1.x, background1.y, paint);
             canvas.drawBitmap(background2.background, background2.x, background2.y, paint);
 
-            canvas.drawText("Score: " + score, 20, 80, paint);
-
             if(isGameOver) {
                 isRunning = false;
                 canvas.drawBitmap(game_over, (float)screenX/2 - (float) game_over.getWidth()/2,
                         (float)screenY/2 - (float) game_over.getHeight()/2, paint);
+                saveIfHighScore(canvas);
                 getHolder().unlockCanvasAndPost(canvas);
                 waitBeforeExiting();
                 return;
             }
+
+            canvas.drawText("Score: " + score, 20, 80, paint);
 
             for (Asteroid asteroid : asteroids) {
                 canvas.drawBitmap(asteroid.getAsteroid(), asteroid.x, asteroid.y, paint);
@@ -184,6 +188,17 @@ public class GameView extends SurfaceView implements Runnable {
                 canvas.drawBitmap(laserBeam.getLaserBeam(), laserBeam.x, laserBeam.y, paint);
             }
             getHolder().unlockCanvasAndPost(canvas);
+        }
+    }
+
+    private void saveIfHighScore(Canvas canvas) {
+        if (sharedPreferences.getInt("highScore", 0) < score) {
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putInt("highScore", score);
+            editor.apply();
+            canvas.drawText("New high score: " + score, 20, 80, paint);
+        } else {
+            canvas.drawText("Score: " + score, 20, 80, paint);
         }
     }
 

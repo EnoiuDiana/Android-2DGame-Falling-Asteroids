@@ -10,8 +10,8 @@
         android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/background"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        android:src="@drawable/background" />
 
     <TextView
         android:id="@+id/title"
@@ -21,45 +21,31 @@
         android:text=" Falling Asteroids "
         android:textColor="@color/white"
         android:layout_centerHorizontal="true"
-        android:layout_above="@id/startButton"
-        android:layout_marginBottom="30dp"
+        android:layout_above="@id/loginButton"
+        android:layout_marginBottom="20dp"
         android:fontFamily="@font/space_font"/>
 
     <TextView
-        android:id="@+id/startButton"
+        android:id="@+id/loginButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=" Play "
-        android:textSize="90sp"
+        android:text=" Login "
+        android:textSize="50sp"
         android:layout_centerInParent="true"
         android:textColor="#ffffff"
         android:fontFamily="@font/play_1" />
 
-
     <TextView
-        android:id="@+id/logoutButton"
+        android:id="@+id/registerButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="30sp"
-        android:layout_marginBottom="30dp"
+        android:layout_below="@id/loginButton"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="20dp"
         android:fontFamily="@font/play_1"
-        android:text=" Logout "
+        android:text=" Register "
         android:textColor="#ffffff"
-        android:textSize="30sp" />
-
-    <TextView
-        android:id="@+id/highScore"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=" Highest Score: "
-        android:textSize="30sp"
-        android:layout_alignParentEnd="true"
-        android:textColor="#ffffff"
-        android:layout_marginEnd="30sp"
-        android:layout_marginTop="30dp"
-        android:fontFamily="@font/play_1"/>
+        android:textSize="50sp" />
 
     <ImageView
         android:id="@+id/volumeControl"
